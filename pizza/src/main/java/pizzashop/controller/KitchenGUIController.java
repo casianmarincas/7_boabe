@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import java.util.Calendar;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class KitchenGUIController {
     @FXML
@@ -22,29 +25,21 @@ public class KitchenGUIController {
     private String extractedTableNumberString = new String();
     private int extractedTableNumberInteger;
     //thread for adding data to kitchenOrderList
-    public  Thread addOrders = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            while (true) {
+    private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+    public void initialize() {
+        //starting thread for adding data to kitchenOrderList
+        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         kitchenOrdersList.setItems(order);
-                        }
+                    }
                 });
-                try {
-                    Thread.sleep(100);
-                  } catch (InterruptedException ex) {
-                    break;
-                }
             }
-        }
-    });
-
-    public void initialize() {
-        //starting thread for adding data to kitchenOrderList
-        addOrders.setDaemon(true);
-        addOrders.start();
+        }, 0, 100, TimeUnit.MILLISECONDS);
         //Controller for Cook Button
         cook.setOnAction(event -> {
             selectedOrder = kitchenOrdersList.getSelectionModel().getSelectedItem();

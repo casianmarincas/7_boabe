@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pizzashop.model.MenuDataModel;
-import pizzashop.gui.OrdersGUI;
 import pizzashop.service.PaymentAlert;
 import pizzashop.service.PizzaService;
 
@@ -59,7 +58,7 @@ public class OrdersGUIController {
     public ObservableList<String> observableList;
     private TableView<MenuDataModel> table = new TableView<MenuDataModel>();
     private ObservableList<MenuDataModel> menuData;// = FXCollections.observableArrayList();
-    private Calendar now = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
     private static double totalAmount;
 
     public OrdersGUIController(){ }
@@ -84,11 +83,11 @@ public class OrdersGUIController {
                     .collect(Collectors.toList());
             observableList = FXCollections.observableList(orderList);
             KitchenGUIController.order.add("Table" + tableNumber +" "+ orderList.toString());
-            orderStatus.setText("Order placed at: " +  now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE));
+            orderStatus.setText("Order placed at: " +  calendar.get(Calendar.HOUR)+":"+ calendar.get(Calendar.MINUTE));
         });
 
         //Controller for Order Served Button
-        orderServed.setOnAction(event -> {orderStatus.setText("Served at: " + now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE));
+        orderServed.setOnAction(event -> {orderStatus.setText("Served at: " + calendar.get(Calendar.HOUR)+":"+ calendar.get(Calendar.MINUTE));
         });
 
         //Controller for Pay Order Button

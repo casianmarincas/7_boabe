@@ -20,15 +20,13 @@ public class PaymentRepository {
     private void readPayments(){
         //ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(filename);
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(file));
+        try (BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
             String line = null;
             while((line=br.readLine())!=null){
                 Payment payment=getPayment(line);
                 paymentList.add(payment);
             }
-            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -71,6 +69,7 @@ public class PaymentRepository {
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Nu pot finaliza scrierea datelor in fisier " + e.getMessage());
         }
     }
 

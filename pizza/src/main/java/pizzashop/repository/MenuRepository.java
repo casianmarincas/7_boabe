@@ -15,7 +15,6 @@ public class MenuRepository {
     }
 
     private void readMenu(){
-        //ClassLoader classLoader = MenuRepository.class.getClassLoader();
         File file = new File(filename);
         this.listMenu= new ArrayList();
         BufferedReader br = null;
