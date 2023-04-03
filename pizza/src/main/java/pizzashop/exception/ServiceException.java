@@ -4,9 +4,9 @@ public class ServiceException extends RuntimeException {
 
     private final String message;
 
-    public ServiceException(String message, String message1) {
+    public ServiceException(String message) {
         super(message);
-        this.message = message1;
+        this.message = message;
     }
 
     @Override
